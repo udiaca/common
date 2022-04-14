@@ -1,6 +1,6 @@
 {
   "name": "@udia/common",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -11,6 +11,9 @@
     "name": "Alexander Wong",
     "email": "alex@udia.ca"
   },
+  "files": [
+    "dist"
+  ],
   "license": "AGPL-3.0",
   "devDependencies": {
     "@types/jest": "^27.4.0",
