@@ -1,8 +1,11 @@
 {
   "name": "@udia/common",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Zero dependency, strongly typed helper library for cryptography, base64 utilities, nested proxy, and invariant.",
-  "repository": "https://git.sr.ht/~udia/common",
+  "repository": {
+    "type": "git",
+    "url": "https://git.sr.ht/~udia/common"
+  },
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
