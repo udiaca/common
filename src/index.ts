@@ -9,6 +9,7 @@ export {
   decryptData,
   signData,
   verifyData,
+  hashData,
   compareBuffers,
   timeSafeCompare,
   timeSafeCompareStrings,

@@ -178,6 +178,27 @@ export const verifyData = async (
 }
 
 /**
+ * Cryptographically hash a payload to hexadecimal string
+ * @param {string|ArrayBuffer|undefined} payload data to hash
+ * @param {'SHA-1'|'SHA-256'|'SHA-384'|'SHA-512'} algorithm default to 'SHA-256'
+ */
+export const hashData = async (
+  payload?: string | ArrayBuffer,
+  algorithm: 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512' = 'SHA-256'
+): Promise<string> => {
+  let data: ArrayBuffer
+  if (typeof payload !== 'object') {
+    data = _encoder.encode(payload)
+  } else {
+    data = payload
+  }
+
+  const hashBuffer = await crypto.subtle.digest(algorithm, data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+}
+
+/**
  * Equality comparison between two array buffers
  * @param {ArrayBuffer} a
  * @param {ArrayBuffer} b

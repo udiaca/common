@@ -6,6 +6,7 @@ import {
   encryptData,
   getRandomString,
   signData,
+  hashData,
   timeSafeCompare,
   timeSafeCompareStrings,
   verifyData,
@@ -95,6 +96,42 @@ describe('crypt', () => {
       await expect(
         verifyData(payloadBuff, decodeBase64Url(''), secret)
       ).resolves.toBeFalsy()
+    })
+  })
+
+  describe('hashData', () => {
+    const alphanum =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    test('SHA-1', async () => {
+      // should all match `echo -n '{INPUT}' | shasum -a 1`
+      await expect(hashData(undefined, 'SHA-1')).resolves.toEqual(
+        'da39a3ee5e6b4b0d3255bfef95601890afd80709'
+      )
+      await expect(hashData('', 'SHA-1')).resolves.toEqual(
+        'da39a3ee5e6b4b0d3255bfef95601890afd80709'
+      )
+      await expect(hashData(alphanum, 'SHA-1')).resolves.toEqual(
+        '761c457bf73b14d27e9e9265c46f4b4dda11f940'
+      )
+      await expect(
+        hashData(encoder.encode(alphanum), 'SHA-1')
+      ).resolves.toEqual('761c457bf73b14d27e9e9265c46f4b4dda11f940')
+    })
+
+    test('SHA-256', async () => {
+      // should all match `echo -n '{INPUT}' | shasum -a 256`
+      await expect(hashData(undefined)).resolves.toEqual(
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+      )
+      await expect(hashData('')).resolves.toEqual(
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+      )
+      await expect(hashData(alphanum)).resolves.toEqual(
+        'db4bfcbd4da0cd85a60c3c37d3fbd8805c77f15fc6b1fdfe614ee0a7c8fdb4c0'
+      )
+      await expect(hashData(encoder.encode(alphanum))).resolves.toEqual(
+        'db4bfcbd4da0cd85a60c3c37d3fbd8805c77f15fc6b1fdfe614ee0a7c8fdb4c0'
+      )
     })
   })
 
